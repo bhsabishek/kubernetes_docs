@@ -1,0 +1,9 @@
+1. When we create pv dynamically using storageclass and pvc and later when we deleted pvc and storageclass the pv is still in cluster and its status shown as Bound and to make it Available again we need to use the below command.
+   * kubectl patch pv <pv-name> -p '{"spec":{"claimRef": null}}'
+
+2. Quorum formula is the most important when we need to calculate the number of masters required for desicion making.
+    Majority: (N/2) + 1
+    for ex:
+            = (3/2) + 1
+            = 1 + 1 (here 3/2 = 1.5 but we need to take floor value of 3/2 which means 1)
+            = 2 (minimum 2 nodes are required for desicion making in case of 3 masternodes means 1 can be down when running 3 master nodes)
