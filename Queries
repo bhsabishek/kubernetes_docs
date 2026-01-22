@@ -1,0 +1,10 @@
+1. For setting up the HA kubernetes cluster we followed the piyush sachdev lecture and we used HAProxy setup. Below are the questions after going through that video
+    a. What if the one HAProxy server is down? are there any other methods to make HAProxy server make available?
+        Recommended architecture
+          1. Two (or three) HAProxy nodes running on separate hosts/AZs.
+          2. Keepalived (VRRP) to provide a floating VIP that points to the active HAProxy; HAProxy forwards TCP 6443 to all master API servers.
+          3. Health checks: HAProxy should probe each API server; Keepalived should demote a node if HAProxy fails health checks.
+          4. Monitoring & automation: Prometheus/Alertmanager + automated replacement (cloud autoscaling or Ansible) for failed LB nodes.
+          5. Configuration management: Store HAProxy config in Git and deploy via Ansible/Terraform to avoid config drift.
+
+    b. How to setup the multiple HAProxy servers?
